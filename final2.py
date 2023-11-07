@@ -16,17 +16,17 @@ udpServSock.bind(SrcAddr)
 
 # 送信用ソケット
 # 接続するSpresenseのIPアドレスとポート番号
-spresense_ip = '220.208.71.34'  # SpresenseのIPアドレスに置き換えてください
-spresense_port = 54321  # Spresenseのポート番号に置き換えてください
+spresense_ip = ''  # SpresenseのIPアドレス
+spresense_port = 54321  # Spresenseのポート番号
 message = 'Success to receive message'
 cli_addr = (spresense_ip, spresense_port)  # IPアドレスとポート番号のタプル
 
 host = '0.0.0.0'
-port = 11111  # EC2インスタンスのセキュリティグループでこのポートを開いてください。
+port = 11111  # EC2インスタンスポート
 
 locaddr = (host, port)
 
-# ①ソケットを作成する
+# ①ソケットを作成
 sock = sc.socket(sc.AF_INET, type=sc.SOCK_DGRAM)
 sock.bind(locaddr)
 
@@ -63,11 +63,11 @@ while True:
             output_class = np.argmax(y.d, axis=1)[0]
             print(f"Detected action: {output_class}")
 
-            # 推論結果が1または2の場合、gyr_xの周波数を計算する
+            # 推論結果が1または2の場合、gyr_xの周波数を計算
             if output_class in [1, 2]:
                 gyr_x_data = input_data[:, 3]  # gyr_xデータを取得
                 fft_values = fft(gyr_x_data)
-                # サンプリング周期が6msのため、サンプリング周波数を計算する
+                # サンプリング周期6ms、サンプリング周波数を計算
                 sampling_frequency = 1 / (6e-3)  # 6ms -> 0.006秒
                 freqs = np.fft.fftfreq(len(gyr_x_data), d=1/sampling_frequency)
                 peak_freq = freqs[np.argmax(np.abs(fft_values))]

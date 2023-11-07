@@ -14,7 +14,7 @@ udpServSock.bind(SrcAddr)
 
 # 送信用
 spresense_ip = ''  # SpresenseのIPアドレスい
-spresense_port = 54321  # Spresenseのポート番号に置き換えてください
+spresense_port = 54321  # Spresenseのポート番号
 # message = 'Success to receive message'
 cli_addr = (spresense_ip, spresense_port)  
 
